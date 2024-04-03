@@ -1,0 +1,67 @@
+return MaterialApp(
+      debugShowCheckedModeBanner: false,
+      home: Scaffold(
+        appBar: AppBar(
+                leadingWidth: 380,
+                backgroundColor:  Color.fromARGB(237, 97, 10, 10),
+                title:Center(child: Text('Basic Information',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255),fontSize: 20,fontFamily: 'LeagueSpartan'),),)
+                
+                ),
+        body: SingleChildScrollView(child: Container(
+          height: 790,
+          decoration: BoxDecoration(color: Color.fromARGB(234, 1, 1, 1)),
+          padding: EdgeInsets.all(12),
+          child: Column(children: [
+            SizedBox(height: 15,),
+            Row(children: [
+                Flexible(
+                  child: TextFormField(
+                    // autovalidateMode: ,
+                    validator: (value){if (value!=null) {
+                      return 'Required';
+                    }
+                    else{
+                      return null;
+                    }}
+                    ,
+                    cursorColor: Color.fromARGB(218, 255, 255, 255),
+                    style: TextStyle(
+                      color: Color.fromARGB(109, 255, 255, 255)
+                    ),
+                    decoration: InputDecoration(hintText: 'Enter FirstName',
+                hintStyle: TextStyle(color: Color.fromARGB(90, 252, 252, 252)),
+                labelText:'FirstName',labelStyle: TextStyle(color: Color.fromARGB(176, 255, 255, 255)),
+                filled: true,
+                fillColor: Color.fromARGB(160, 91, 93, 95),
+                border: OutlineInputBorder(
+                borderSide: BorderSide.none,),
+                    )),
+                ),
+                SizedBox(width: 25,),
+                Flexible(
+                  child: TextField(decoration: InputDecoration(hintText: 'Enter LastName',
+                hintStyle: TextStyle(color: Color.fromARGB(90, 252, 252, 252)),
+                labelText:'LastName',labelStyle: TextStyle(color: Color.fromARGB(176, 255, 255, 255)),
+                filled: true,
+                fillColor: Color.fromARGB(160, 91, 93, 95),
+                border: OutlineInputBorder(
+                borderSide: BorderSide.none,))),
+                ),
+              ],),
+              SizedBox(height: 28,),
+              ElevatedButton(onPressed: () { 
+                
+              },
+              child: Text('Login'),
+              style: ElevatedButton.styleFrom(
+                elevation: 8.0,
+                minimumSize:const Size(380, 50),
+                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5)),
+                backgroundColor:Color.fromRGBO(155, 6, 6, 1),
+                foregroundColor: Color.fromRGBO(255, 255, 255, 1),
+                
+                ),),
+          ],),
+        ),),
+        ),
+    );

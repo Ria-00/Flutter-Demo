@@ -1,30 +1,23 @@
+// ignore_for_file: public_member_api_docs, sort_constructors_first
 class Employee {
-  String? name;
+  String? firstname;
+  String? lastName;
   String? gender;
-  String? location;
-  List<String>? projects;
-  String? hybrid;
- String? get getName => this.name;
+  String? age;
+  String? date;
+  String? email;
+  String? rating;
+  Map<String,bool> issues={
+    'The information provided about movies accurate and complete.': false,
+    'Easy to create an account and manage your preferences': false,
+    'Need to work on the UI/UX': false,
+  };
+  
 
- set setName(String? name) => this.name = name;
+ 
 
-  get getGender => this.gender;
-
- set setGender( gender) => this.gender = gender;
-
-  get getLocation => this.location;
-
- set setLocation( location) => this.location = location;
-
-  get getProjects => this.projects;
-
- set setProjects( projects) => this.projects = projects;
-
-  get getHybrid => this.hybrid;
-
- set setHybrid( hybrid) => this.hybrid = hybrid;
-
- Employee();
+  Employee(
+  );
 
  
 
