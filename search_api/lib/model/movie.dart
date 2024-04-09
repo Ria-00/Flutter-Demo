@@ -13,7 +13,7 @@ class Movie{
     title=data['result'][0]['title'];
     type=data['result'][0]['type'];
     year=data['result'][0]['year'];
-    // cast=data['result'][0]["cast"];
+    cast=data['result'][0]["cast"];
     genres=data['result'][0]['genres'];
     directors=data['result'][0]['directors'];
     overview=data['result'][0]['overview'];

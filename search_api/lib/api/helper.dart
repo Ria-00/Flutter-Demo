@@ -35,7 +35,7 @@ class Helper{
     }
 
     Movie m=Movie.fromJson(data);
-    print(m.title);
+    print(m.cast);
     return m;
   }
 
@@ -43,7 +43,7 @@ class Helper{
 
 void main(){
   Helper h=Helper();
-  h.getMovie('Batman', 'us', 'en');
+  h.getMovie('Barbie', 'us', 'en');
 
 }
   

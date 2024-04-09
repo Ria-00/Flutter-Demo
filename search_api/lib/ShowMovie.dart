@@ -2,6 +2,7 @@ import 'package:flutter/material.dart';
 import 'package:search_api/main.dart';
 import 'package:search_api/model/movie.dart';
 
+// ignore: must_be_immutable
 class ShowMovie extends StatelessWidget {
   Movie m1=Movie();
 
