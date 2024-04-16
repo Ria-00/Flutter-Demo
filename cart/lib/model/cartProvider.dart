@@ -6,13 +6,23 @@ class cartProvider extends ChangeNotifier{
 
   List<Product> cart=[];
 
-  void add(String name){
-    cart.add(name);
+  void add(Product n){
+      cart.add(n);
     notifyListeners();
   }
 
-  void remove(String name){
-    cart.remove(name);
+  void increaseQty(int i){
+    cart[i].quantity+=1;
+    notifyListeners();
+  }
+
+  void decraseQty(int i){
+    cart[i].quantity-=1;
+    notifyListeners();
+  }
+
+  void delete(int n){
+    cart.removeAt(n);
     notifyListeners();
   }
 

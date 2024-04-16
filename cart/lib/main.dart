@@ -1,24 +1,49 @@
+
+import 'package:cart/ShowCart.dart';
+import 'package:cart/model/Product.dart';
 import 'package:cart/model/cartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
 void main() {
-  runApp(MyApp());
+  runApp(
+    ChangeNotifierProvider(
+      create: (context) => cartProvider(),
+      child: MaterialApp(
+        debugShowCheckedModeBanner: false,
+        home: MyApp(),
+      ),
+    ),
+  );
 }
 
 class MyApp extends StatelessWidget {
   final itemController = TextEditingController();
-
+  List<Product> pList=[
+    Product("Shirt", 7999, 1,10,"https://imagescdn.thecollective.in/img/app/product/6/630053-6170579.jpg"),
+    Product("Jacket", 8999, 1,10,"https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQaNes-ZFMvfz04qYzrkjVrxwSN6ZlBK5jvoPCnZnbxbtzEbYJeBxDhv8RiyGV1NAz0xTGfTZKG8siDJ4fw_-1AhyMB_Gk65VRtFdU9GT6gH7B_qfqa-e9ZjQ&usqp=CAE"),
+    Product("Skirt", 4999, 1,10,"https://imagescdn.thecollective.in/img/app/product/8/881321-10579169.jpg"),
+    Product("Cap", 4999, 1,10,"https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQIMMp3OMRPPCimeMT1KPsc9ZpsMWCkSRsc2icF3Ymdhviht7BBNoeqzhAvYc_0ZBS1QM4T6M42QE-6bGLUF3-LitbEI4c4t5tfAeA5bmt5pdxKo88Gfippyw"),
+    
+  ];
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(create: (context)=>cartProvider(),
-      child: MaterialApp(
+
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
           leadingWidth: 380,
-          leading:Row(children: [SizedBox(width: 145,),Icon(Icons.trolley,size: 30,color: const Color.fromARGB(255, 255, 255, 255),),Text('Cart',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255),fontSize: 25,fontFamily: 'LeagueSpartan',fontWeight: FontWeight.w600),)],),
+          leading:Row(children: [SizedBox(width: 145,),Icon(Icons.window_rounded,size: 25,color: Color.fromARGB(162, 255, 255, 255)),Text('Products',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255),fontSize: 25,fontFamily: 'LeagueSpartan',fontWeight: FontWeight.w600),),SizedBox(width: 67,),
+          GestureDetector(child: Icon(Icons.trolley,size: 30,color: const Color.fromARGB(255, 255, 255, 255),),
+          onTap: () {
+            Navigator.push(
+                      context,
+                      MaterialPageRoute(builder: (context) =>ShowCart()),);
+               
+          },
+          )],),
           backgroundColor:  Color.fromARGB(237, 97, 10, 10),),
       
         body: SingleChildScrollView(
@@ -34,87 +59,140 @@ class MyApp extends StatelessWidget {
                   SizedBox(height: 15,),
                   Row(
                     children: [
+                      SizedBox(width: 16,),
                       Container(
-                        width: 290,
-                        child: TextFormField(
-                          controller: itemController,
-                          autovalidateMode: AutovalidateMode.onUserInteraction,  
-                          validator: (value){if (value==null||value.isEmpty) {
-                            return 'Required';
-                          }
-                          else{
-                            return null;
-                          }}
-                          ,
-                          cursorColor: Color.fromARGB(218, 255, 255, 255),
-                          style: TextStyle(
-                            color: Color.fromARGB(109, 255, 255, 255)
-                          ),
-                          decoration: InputDecoration(hintText: 'Enter name',
-                                        hintStyle: TextStyle(color: Color.fromARGB(90, 252, 252, 252)),
-                                        labelText:'Item name',labelStyle: TextStyle(color: Color.fromARGB(176, 255, 255, 255)),
-                                        filled: true,
-                                        fillColor: Color.fromARGB(160, 91, 93, 95),
-                                        border: OutlineInputBorder(
-                                        borderSide: BorderSide.none,),
-                          )),
-                      ),
-                      SizedBox(width: 14,),
-                      GestureDetector(
-                        child: Icon(
-                        Icons.add,
-                        color: Color.fromARGB(255, 113, 13, 13),
-                        size: 60,
-                      ),
-                      onTap: () {
-                        provider.add(itemController.text.trim());
-                        itemController.text='';
-                      },
-                      )
+                        height: 260,
+                        width: 150,
+                        child: Column(children: [
+                          Image.network(pList[0].img),
+                          SizedBox(height: 6,),
+                          Text(pList[0].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${pList[0].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(pList[0]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                                  onPressed: () {
+                                    if (provider.cart.contains(pList[0])) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Center(child: Text('Already in cart!')),
+                                          duration: Duration(milliseconds: 1500),
+                                        ),);
+                            } else {
+                              provider.add(pList[0]);  
+                            }
+                                  },)
+                        
+                          ],)
+                        ],)
+                        
+                        ),
+                        SizedBox(width: 42,),
+                      Container(
+                        height: 260,
+                        width: 150,
+                        child: Column(children: [
+                          Image.network(pList[1].img),
+                          SizedBox(height: 6,),
+                          Text(pList[1].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${pList[1].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(pList[1]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                                  onPressed: () {
+                                    if (provider.cart.contains(pList[1])) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Center(child: Text('Already in cart!')),
+                                          duration: Duration(milliseconds: 1500),
+                                        ),);
+                            } else {
+                              provider.add(pList[1]);  
+                            }
+                                  },)
+                        
+                          ],)
+                        ],)
+                        
+                        )
                       
                     ],
                   ),
-                  SizedBox(height: 28,),
-                      Flexible(
-                        child: ListView.builder(
-                          shrinkWrap: true,
-                          itemCount: provider.cart.length,
-                          itemBuilder: (context,index){
-                            return ListTile(
-                              title: Text(provider.cart[index],style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255)),),
-                              trailing:GestureDetector(
-                                child:Icon(Icons.delete_outline,color:  Color.fromARGB(255, 113, 13, 13),),
-                                onTap: () {
-                                  provider.remove(provider.cart[index]);
-                                },
-                                )
-                               
-                            );
-                          },
+                  SizedBox(height: 30,),
+                  Row(
+                    children: [
+                      SizedBox(width: 16,),
+                      Container(
+                        height: 260,
+                        width: 150,
+                        child: Column(children: [
+                          Image.network(pList[2].img),
+                          SizedBox(height: 6,),
+                          Text(pList[2].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${pList[2].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(pList[2]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                                  onPressed: () {
+                                    if (provider.cart.contains(pList[2])) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Center(child: Text('Already in cart!')),
+                                          duration: Duration(milliseconds: 1500),
+                                        ),);
+                            } else {
+                              provider.add(pList[2]);  
+                            }
+                                  },)
+                        
+                          ],)
+                        ],)
                         
                         ),
-                      ),
-                      SizedBox(height: 10,),
-              ElevatedButton(onPressed: () {  
-                provider.cart.re();
-              }
-              ,
-              child: Text('Search',style: TextStyle(fontSize: 18, fontFamily: 'LeagueSpartan',fontWeight: FontWeight.w600),),
-              style: ElevatedButton.styleFrom(
-                elevation: 8.0,
-                minimumSize:const Size(380, 50),
-                shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5)),
-                backgroundColor:Color.fromRGBO(155, 6, 6, 1),
-                foregroundColor: Color.fromRGBO(255, 255, 255, 1),
+                        SizedBox(width: 42,),
+                      Container(
+                        height: 260,
+                        width: 150,
+                        child: Column(children: [
+                          Image.network(pList[3].img),
+                          SizedBox(height: 6,),
+                          Text(pList[3].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${pList[3].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(pList[3]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                                  onPressed: () {
+                                    if (provider.cart.contains(pList[3])) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          content: Center(child: Text('Already in cart!')),
+                                          duration: Duration(milliseconds: 1500),
+                                        ),);
+                            } else {
+                              provider.add(pList[3]);  
+                            }
+                                  },)
+                        
+                          ],)
+                        ],)
+                        
+                        )
+                      
+                    ],
+                  ),
+              // ElevatedButton(onPressed: () {  
+              //   String firstProductName = pList[0].name;
+              //   print(provider.cart[0].name);
                 
-                ),),
+
+              // }
+              // ,
+              // child: Text('Clear All',style: TextStyle(fontSize: 18, fontFamily: 'LeagueSpartan',fontWeight: FontWeight.w600),),
+              // style: ElevatedButton.styleFrom(
+              //   elevation: 8.0,
+              //   shape: RoundedRectangleBorder(borderRadius:BorderRadius.circular(5)),
+              //   backgroundColor:Color.fromRGBO(155, 6, 6, 1),
+              //   foregroundColor: Color.fromRGBO(255, 255, 255, 1),
+                
+              //   ),),
                     ],
               ),
             );
   }),
         ),
         ),
-    ),
     );
   }
 }
