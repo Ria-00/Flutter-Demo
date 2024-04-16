@@ -69,7 +69,11 @@ class ShowCart extends StatelessWidget {
                                 IconButton(
                                   icon: Icon(Icons.remove),
                                   onPressed: () {
-                                    provider.decraseQty(index);
+                                    try {
+                                      provider.decraseQty(index);
+                                    } catch (e) {
+                                      
+                                    }
                                   },
                                 ),
                                 Text(
@@ -79,7 +83,16 @@ class ShowCart extends StatelessWidget {
                                 IconButton(
                                   icon: Icon(Icons.add),
                                   onPressed: () {
-                                    provider.increaseQty(index);
+                                    try {
+                                      provider.increaseQty(index);
+                                    } catch (e) {
+                                      ScaffoldMessenger.of(context).showSnackBar(
+                                          SnackBar(
+                                            content: Center(child: Text('Limited Stock!')), // Show error message in the Snackbar
+                                          ),
+                                        );
+                                    }
+                                    
                                   },
                                 ),
                               ],

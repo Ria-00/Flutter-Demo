@@ -12,13 +12,32 @@ class cartProvider extends ChangeNotifier{
   }
 
   void increaseQty(int i){
-    cart[i].quantity+=1;
-    notifyListeners();
+    try {
+      if (cart[i].quantity+1>cart[i].limit) {
+      throw Exception();
+    } else {
+      cart[i].quantity+=1;
+      notifyListeners();
+    }
+    } catch (e) {
+      throw Exception();
+    }
+    
+    
   }
 
   void decraseQty(int i){
-    cart[i].quantity-=1;
-    notifyListeners();
+    try {
+      if (cart[i].quantity-1<0) {
+      throw Exception();
+    } else {
+      cart[i].quantity-=1;
+      notifyListeners();
+    }
+    } catch (e) {
+      throw Exception();
+    }
+    
   }
 
   void delete(int n){
