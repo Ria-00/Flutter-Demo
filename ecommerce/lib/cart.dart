@@ -1,28 +1,13 @@
 
-import 'package:cart/ShowCart.dart';
-import 'package:cart/model/Product.dart';
-import 'package:cart/model/cartProvider.dart';
+import 'package:ecommerce/model/Product.dart';
+import 'package:ecommerce/model/cartProvider.dart';
+import 'package:ecommerce/showCart.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-void main() {
-  runApp(
-    ChangeNotifierProvider(
-      create: (context) => cartProvider(),
-      child: MaterialApp(
-        debugShowCheckedModeBanner: false,
-        home: MyApp(),
-      routes: {
-        '/showCart':(context) => ShowCart()
-      },
-      ),
-      
-      
-    ),
-  );
-}
 
-class MyApp extends StatelessWidget {
+
+class Cart extends StatelessWidget {
   final itemController = TextEditingController();
   List<Product> pList=[
     Product("Shirt", 7999, 1,10,"https://imagescdn.thecollective.in/img/app/product/6/630053-6170579.jpg"),
@@ -34,8 +19,9 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-
-    return MaterialApp(
+    return ChangeNotifierProvider(
+      create: (context) => cartProvider(),
+      child: MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -198,6 +184,6 @@ class MyApp extends StatelessWidget {
   }),
         ),
         ),
-    );
+    ));
   }
 }

@@ -39,7 +39,7 @@ class _MyApp extends State<MyApp> {
                     decoration: BoxDecoration(
                       shape: BoxShape.circle,
                       color: () {
-                          if (snapshot.data=="yes") {
+                          if (snapshot.data==true) {
                             return Color.fromARGB(255, 7, 150, 50);
                           } else {
                             return Color.fromARGB(255, 190, 4, 4);

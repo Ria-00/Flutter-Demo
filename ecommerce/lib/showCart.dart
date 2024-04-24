@@ -1,12 +1,10 @@
-import 'package:cart/main.dart';
-import 'package:cart/model/cartProvider.dart';
+import 'package:ecommerce/cart.dart';
+import 'package:ecommerce/model/cartProvider.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
-
 class ShowCart extends StatelessWidget {
-  
-  // This widget is the root of your application.
+
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
@@ -19,7 +17,7 @@ class ShowCart extends StatelessWidget {
           onTap: () {
             Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) =>MyApp()),);
+                      MaterialPageRoute(builder: (context) =>Cart()),);
           },
           ), 
           SizedBox(width: 120,),Icon(Icons.trolley,size: 30,color: const Color.fromARGB(255, 255, 255, 255),),Text('Cart',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255),fontSize: 25,fontFamily: 'LeagueSpartan',fontWeight: FontWeight.w600),)],),
@@ -120,6 +118,6 @@ class ShowCart extends StatelessWidget {
   }),
         ),
         ),
-    );
+    ); 
   }
 }

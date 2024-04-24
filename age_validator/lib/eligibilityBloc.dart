@@ -1,11 +1,12 @@
 
 import 'dart:async';
-
 class eligibilityBloc{
 
-  StreamController<String> mainController=StreamController();
-  StreamSink<String> get mainSink=> mainController.sink;
-  Stream<String> get mainStream=> mainController.stream; 
+  late bool cond;
+
+  StreamController<bool> mainController=StreamController();
+  StreamSink<bool> get mainSink=> mainController.sink;
+  Stream<bool> get mainStream=> mainController.stream; 
 
   StreamController<int> eventController=StreamController();
   StreamSink<int> get eventSink=> eventController.sink;
@@ -14,9 +15,11 @@ class eligibilityBloc{
   eligibilityBloc(){
     eventStream.listen((event) {
       if (event>18) {
-        mainSink.add("yes");
+        cond=true;
+        mainSink.add(cond);
       } else {
-        mainSink.add("no");
+        cond=false;
+        mainSink.add(cond);
       }
     });
   }
