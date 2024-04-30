@@ -17,26 +17,28 @@ class Signup extends StatelessWidget {
             padding: EdgeInsets.all(12),
             child: Column(children: [
               SizedBox(height: 35,),
-              Row(children: [
-                Flexible(
-                  child: TextField(
-                    cursorColor: const Color.fromARGB(255, 255, 255, 255),
-                    style: TextStyle(
-                      color: Colors.white
-                    ),
-                    decoration: InputDecoration(labelText: 'Enter First Name',
-                    )),
-                ),
-                SizedBox(width: 25,),
-                Flexible(
-                  child: TextField(decoration: InputDecoration(labelText: 'Enter Last Name')),flex:1,
-                ),
-              ],),
+              // Row(children: [
+              //   Flexible(
+              //     child: TextField(
+              //       cursorColor: const Color.fromARGB(255, 255, 255, 255),
+              //       style: TextStyle(
+              //         color: Colors.white
+              //       ),
+              //       decoration: InputDecoration(labelText: 'Enter First Name',
+              //       )),
+              //   ),
+              //   SizedBox(width: 25,),
+              //   Flexible(
+              //     child: TextField(decoration: InputDecoration(labelText: 'Enter Last Name')),flex:1,
+              //   ),
+              // ],),
               TextField(decoration: InputDecoration(labelText: 'Email',hintText: 'abc@domain.com',hintStyle: TextStyle(color: Color.fromARGB(156, 125, 124, 124))),),
               TextField(decoration: InputDecoration(labelText: 'Password'),obscureText: true,),
-              TextField(decoration: InputDecoration(labelText: 'Confirm Password'),obscureText: true,),
+              // TextField(decoration: InputDecoration(labelText: 'Confirm Password'),obscureText: true,),
               SizedBox(height: 30,),
-              ElevatedButton(onPressed: ()=>Navigator.push(context, MaterialPageRoute(builder: (context) =>MyApp())), child:Text('Register'),
+              ElevatedButton(
+                onPressed: ()=>
+                Navigator.push(context, MaterialPageRoute(builder: (context) =>MyApp())), child:Text('Register'),
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(400, 40),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),

@@ -1,7 +1,7 @@
 
-import 'package:ecommerce/model/Product.dart';
 import 'package:ecommerce/model/cartProvider.dart';
 import 'package:ecommerce/showCart.dart';
+import 'package:ecommerce/showProduct.dart';
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 
@@ -9,19 +9,10 @@ import 'package:provider/provider.dart';
 
 class Cart extends StatelessWidget {
   final itemController = TextEditingController();
-  List<Product> pList=[
-    Product("Shirt", 7999, 1,10,"https://imagescdn.thecollective.in/img/app/product/6/630053-6170579.jpg"),
-    Product("Jacket", 8999, 1,10,"https://encrypted-tbn0.gstatic.com/shopping?q=tbn:ANd9GcQaNes-ZFMvfz04qYzrkjVrxwSN6ZlBK5jvoPCnZnbxbtzEbYJeBxDhv8RiyGV1NAz0xTGfTZKG8siDJ4fw_-1AhyMB_Gk65VRtFdU9GT6gH7B_qfqa-e9ZjQ&usqp=CAE"),
-    Product("Skirt", 4999, 1,10,"https://imagescdn.thecollective.in/img/app/product/8/881321-10579169.jpg"),
-    Product("Cap", 4999, 1,10,"https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcQIMMp3OMRPPCimeMT1KPsc9ZpsMWCkSRsc2icF3Ymdhviht7BBNoeqzhAvYc_0ZBS1QM4T6M42QE-6bGLUF3-LitbEI4c4t5tfAeA5bmt5pdxKo88Gfippyw"),
-    
-  ];
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return ChangeNotifierProvider(
-      create: (context) => cartProvider(),
-      child: MaterialApp(
+    return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
         appBar: AppBar(
@@ -47,7 +38,7 @@ class Cart extends StatelessWidget {
               padding: EdgeInsets.all(12),
               child: Column(
                 children: [
-                  SizedBox(height: 15,),
+                  SizedBox(height: 20,),
                   Row(
                     children: [
                       SizedBox(width: 16,),
@@ -55,20 +46,26 @@ class Cart extends StatelessWidget {
                         height: 260,
                         width: 150,
                         child: Column(children: [
-                          Image.network(pList[0].img),
+                          GestureDetector(
+                            onTap: (){
+                              provider.current=0;
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>ShowProduct()));
+                            },
+                            child: Image.network(provider.pList[0].img)
+                          ),
                           SizedBox(height: 6,),
-                          Text(pList[0].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
-                          Row(children: [SizedBox(width: 10,),Text('\$${pList[0].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
-                          IconButton(icon: Icon(provider.cart.contains(pList[0]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                          Text(provider.pList[0].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${provider.pList[0].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(provider.pList[0]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
                                   onPressed: () {
-                                    if (provider.cart.contains(pList[0])) {
+                                    if (provider.cart.contains(provider.pList[0])) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           content: Center(child: Text('Already in cart!')),
                                           duration: Duration(milliseconds: 1500),
                                         ),);
                             } else {
-                              provider.add(pList[0]);  
+                              provider.add(provider.pList[0]);  
                             }
                                   },)
                         
@@ -81,20 +78,25 @@ class Cart extends StatelessWidget {
                         height: 260,
                         width: 150,
                         child: Column(children: [
-                          Image.network(pList[1].img),
+                          GestureDetector(
+                            onTap: (){
+                              provider.current=1;
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>ShowProduct()));
+                            },
+                            child: Image.network(provider.pList[1].img)),
                           SizedBox(height: 6,),
-                          Text(pList[1].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
-                          Row(children: [SizedBox(width: 10,),Text('\$${pList[1].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
-                          IconButton(icon: Icon(provider.cart.contains(pList[1]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                          Text(provider.pList[1].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${provider.pList[1].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(provider.pList[1]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
                                   onPressed: () {
-                                    if (provider.cart.contains(pList[1])) {
+                                    if (provider.cart.contains(provider.pList[1])) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           content: Center(child: Text('Already in cart!')),
                                           duration: Duration(milliseconds: 1500),
                                         ),);
                             } else {
-                              provider.add(pList[1]);  
+                              provider.add(provider.pList[1]);  
                             }
                                   },)
                         
@@ -113,20 +115,25 @@ class Cart extends StatelessWidget {
                         height: 260,
                         width: 150,
                         child: Column(children: [
-                          Image.network(pList[2].img),
+                          GestureDetector(
+                            onTap: (){
+                              provider.current=2;
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>ShowProduct()));
+                            },
+                            child:Image.network(provider.pList[2].img)),
                           SizedBox(height: 6,),
-                          Text(pList[2].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
-                          Row(children: [SizedBox(width: 10,),Text('\$${pList[2].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
-                          IconButton(icon: Icon(provider.cart.contains(pList[2]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                          Text(provider.pList[2].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${provider.pList[2].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(provider.pList[2]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
                                   onPressed: () {
-                                    if (provider.cart.contains(pList[2])) {
+                                    if (provider.cart.contains(provider.pList[2])) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           content: Center(child: Text('Already in cart!')),
                                           duration: Duration(milliseconds: 1500),
                                         ),);
                             } else {
-                              provider.add(pList[2]);  
+                              provider.add(provider.pList[2]);  
                             }
                                   },)
                         
@@ -139,20 +146,25 @@ class Cart extends StatelessWidget {
                         height: 260,
                         width: 150,
                         child: Column(children: [
-                          Image.network(pList[3].img),
+                          GestureDetector(
+                            onTap: (){
+                              provider.current=3;
+                              Navigator.push(context, MaterialPageRoute(builder: (context) =>ShowProduct()));
+                            },
+                            child:Image.network(provider.pList[3].img)),
                           SizedBox(height: 6,),
-                          Text(pList[3].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
-                          Row(children: [SizedBox(width: 10,),Text('\$${pList[3].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
-                          IconButton(icon: Icon(provider.cart.contains(pList[3]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
+                          Text(provider.pList[3].name,style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 24),),
+                          Row(children: [SizedBox(width: 10,),Text('\$${provider.pList[3].price}',style: TextStyle(color: const Color.fromARGB(255, 255, 255, 255,),fontSize: 19)),SizedBox(width: 35,),
+                          IconButton(icon: Icon(provider.cart.contains(provider.pList[3]) ? Icons.check : Icons.add,color: Color.fromARGB(255, 121, 4, 4),size: 33,),
                                   onPressed: () {
-                                    if (provider.cart.contains(pList[3])) {
+                                    if (provider.cart.contains(provider.pList[3])) {
                                       ScaffoldMessenger.of(context).showSnackBar(
                                         SnackBar(
                                           content: Center(child: Text('Already in cart!')),
                                           duration: Duration(milliseconds: 1500),
                                         ),);
                             } else {
-                              provider.add(pList[3]);  
+                              provider.add(provider.pList[3]);  
                             }
                                   },)
                         
@@ -164,7 +176,7 @@ class Cart extends StatelessWidget {
                     ],
                   ),
               // ElevatedButton(onPressed: () {  
-              //   String firstProductName = pList[0].name;
+              //   String firstProductName = provider.pList[0].name;
               //   print(provider.cart[0].name);
                 
 
@@ -184,6 +196,6 @@ class Cart extends StatelessWidget {
   }),
         ),
         ),
-    ));
+    );
   }
 }
