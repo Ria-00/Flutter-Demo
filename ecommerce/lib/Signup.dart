@@ -1,8 +1,15 @@
+import 'package:ecommerce/Services/UserOperations.dart';
 import 'package:ecommerce/main.dart';
+import 'package:ecommerce/model/UserClass.dart';
+import 'package:firebase_auth/firebase_auth.dart';
 import 'package:flutter/material.dart';
 
 class Signup extends StatelessWidget {
-  const Signup({super.key});
+  Signup({super.key});
+  UserOpeartions operate=UserOpeartions();
+  UserClass u=UserClass();
+  final emailController=TextEditingController(); 
+  final passController=TextEditingController();
 
   @override
   Widget build(BuildContext context) {
@@ -32,13 +39,34 @@ class Signup extends StatelessWidget {
               //     child: TextField(decoration: InputDecoration(labelText: 'Enter Last Name')),flex:1,
               //   ),
               // ],),
-              TextField(decoration: InputDecoration(labelText: 'Email',hintText: 'abc@domain.com',hintStyle: TextStyle(color: Color.fromARGB(156, 125, 124, 124))),),
-              TextField(decoration: InputDecoration(labelText: 'Password'),obscureText: true,),
+              TextField(
+                controller: emailController, 
+                style: TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255)
+                    ),
+                decoration: InputDecoration(
+                  fillColor: const Color.fromARGB(255, 255, 255, 255),
+                  labelText: 'Email',
+                  hintText: 'abc@domain.com',
+                  hintStyle: TextStyle(color: Color.fromARGB(156, 156, 151, 151))
+                  ),
+                  ),
+              TextField(
+                style: TextStyle(
+                      color: Color.fromARGB(255, 255, 255, 255)
+                    ),
+                controller: passController,
+                decoration: InputDecoration(labelText: 'Password'),
+                obscureText: true,),
               // TextField(decoration: InputDecoration(labelText: 'Confirm Password'),obscureText: true,),
               SizedBox(height: 30,),
               ElevatedButton(
-                onPressed: ()=>
-                Navigator.push(context, MaterialPageRoute(builder: (context) =>MyApp())), child:Text('Register'),
+                onPressed: (){
+                  u.email=emailController.text.trim();
+                  u.password=passController.text.trim();
+                  operate.add(u);
+                  Navigator.push(context, MaterialPageRoute(builder: (context) =>MyApp()));},
+                child:Text('Register'),
                 style: ElevatedButton.styleFrom(
                   fixedSize: Size(400, 40),
                     shape: RoundedRectangleBorder(borderRadius: BorderRadius.circular(5)),
@@ -54,7 +82,7 @@ class Signup extends StatelessWidget {
                 Flexible(child: 
                   ElevatedButton(onPressed: ()=>(), child: Container(
                 
-                child: Row(children:[SizedBox(width: 60,),Image.network("https://cdn.iconscout.com/icon/free/png-256/free-google-1772223-1507807.png",height: 20,width: 25,),Text("       Continue with Google",style: TextStyle(fontWeight: FontWeight.w600),)],),
+                child: Row(children:[SizedBox(width: 60,),Text("       Continue with Google",style: TextStyle(fontWeight: FontWeight.w600),)],),
               ),
               style: ElevatedButton.styleFrom(
                   shape: RoundedRectangleBorder(borderRadius: BorderRadius.all(Radius.circular(5))),

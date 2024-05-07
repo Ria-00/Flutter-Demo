@@ -1,5 +1,7 @@
+import 'package:ecommerce/Services/UserOperations.dart';
 import 'package:ecommerce/Signup.dart';
 import 'package:ecommerce/cart.dart';
+import 'package:ecommerce/model/UserClass.dart';
 import 'package:ecommerce/model/cartProvider.dart';
 import 'package:ecommerce/showCart.dart';
 import 'package:firebase_core/firebase_core.dart';
@@ -8,7 +10,14 @@ import 'package:provider/provider.dart';
 
 void main() async{
   WidgetsFlutterBinding.ensureInitialized();    // ensure that all the widgets be available with firebase integration
-  await Firebase.initializeApp();   //initialzes an instance and returns the appbefore actual building[initializes the connection bw firebase before widget tree building starts]
+  await Firebase.initializeApp(
+    options: FirebaseOptions(
+    apiKey: 'AIzaSyBbSmgBdNNsJdlQEm5HMKUimbLBch5Yn4k',
+    appId: '1:1025175293886:android:73ba13be859859145673ef',
+    messagingSenderId: '1025175293886',
+    projectId: 'e-commerce-b8e00',
+  )
+  );   //initialzes an instance and returns the appbefore actual building[initializes the connection bw firebase before widget tree building starts]
 
   // Thus called before runApp (await to wait for connection first)
 
@@ -43,6 +52,11 @@ class MyAppState extends State<MyApp>{
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
+    UserOpeartions operate=UserOpeartions();
+    UserClass u=UserClass();
+    final emailController=TextEditingController(); 
+    final passController=TextEditingController();
+  
     return MaterialApp(
       debugShowCheckedModeBanner: false,
       home: Scaffold(
@@ -58,6 +72,7 @@ class MyAppState extends State<MyApp>{
               // Image.asset('assets/images/imbc1.png',height: 100,),
               SizedBox(height: 50,),
               TextField(
+                controller: emailController,
               cursorColor: const Color.fromARGB(255, 255, 255, 255),
               style: TextStyle(
                 color: Colors.white
@@ -77,18 +92,20 @@ class MyAppState extends State<MyApp>{
                 children: [
                   Positioned(child: IconButton(icon: Icon(see ? Icons.visibility : Icons.visibility_off,color: Color.fromARGB(168, 135, 135, 135),size: 33,),
                                   onPressed: () {
-                                    
-                                    if (see==false) {
+                                    setState(() {
+                                      if (see==false) {
                                       see=true;
                                     } else {
                                       see=false;
                                     }
+                                    });
                                   },
                                   ),
                       top: 10, 
                       left: 300,           
                   ),
                   TextField(
+                    controller: passController,
                 cursorColor: const Color.fromARGB(255, 255, 255, 255),
               style: TextStyle(
                 color: Colors.white
@@ -107,11 +124,24 @@ class MyAppState extends State<MyApp>{
               ),
               
                 SizedBox(height: 30,),
-                ElevatedButton(onPressed: () {
-            Navigator.push(
-              context,
-              MaterialPageRoute(builder: (context) =>Cart()),
-            );
+                ElevatedButton(onPressed: () async{
+                  u.email=emailController.text.trim();
+                  u.password=passController.text.trim();
+                  int res=await operate.login(u);
+                  if (res==1) {
+                    Navigator.push(
+                        context,
+                        MaterialPageRoute(builder: (context) =>Cart()),
+                      );
+                  } else {
+                    ScaffoldMessenger.of(context).showSnackBar(
+                                        SnackBar(
+                                          backgroundColor: Colors.cyan,
+                                          content: Center(child: Text('Already in cart!')),
+                                          duration: Duration(milliseconds: 1500),
+                     ),);
+                  }
+            
           },
               child: Text('Login'),
               style: ElevatedButton.styleFrom(
